@@ -28,7 +28,11 @@ class Database:
 # Metoda save_score(player, score) zwraca: "Saved score {score} for {player}"
 
 class ScoreService:
-    pass
+    def __init__(self):
+        self.database = Database()
+
+    def save_score(self, player, score):
+        return self.database.save(player, score)
 
 
 # TODO: Zaimplementuj Game
@@ -40,7 +44,11 @@ class ScoreService:
 # Low Coupling: Game nie zna Database, tylko ScoreService (pośrednik)
 
 class Game:
-    pass
+    def __init__(self, score_service: ScoreService):
+        self.score_service = score_service
+
+    def finish_game(self, player, score):
+        return f"Game finished. {self.score_service.save_score(player, score)}"
 
 
 # GRASP Low Coupling:
